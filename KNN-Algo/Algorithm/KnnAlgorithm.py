@@ -3,6 +3,7 @@ from Data.Vector import Vector
 
 
 class KnnAlgorithm:
+
     def __init__(self, dataSet: VectorList, testSet: VectorList):
         self.dataSet = dataSet
         self.testSet = testSet
@@ -16,7 +17,6 @@ class KnnAlgorithm:
             k = len(self.dataSet.vectorList)
 
         if vectors_to_test.__class__ is VectorList:
-            all_the_test = []
             index = 0
             accuracy_for_group = 0
 
@@ -26,19 +26,17 @@ class KnnAlgorithm:
 
                 list_distance_class.sort()
                 accuracy_for_group += is_accurate(vector_test, list_distance_class[:k])
-                all_the_test.append(list_distance_class[:k])
                 list_distance_class.clear()
                 index += 1
-            group_accuracy(index, accuracy_for_group)
-            return all_the_test
+            return group_accuracy(index, accuracy_for_group)
         else:
             for vector_data in self.dataSet.vectorList:
                 list_distance_class.append([vectors_to_test.distance(vector_data.vectorSet), vector_data.className])
 
         list_distance_class.sort()
-        acc = is_accurate(vectors_to_test, list_distance_class[:k])
-        print(group_accuracy(1, acc))
-        return list_distance_class[:k]
+        predicted = repeat_the_most(list_distance_class[:k])
+
+        return predicted
 
 
 def repeat_the_most(listOfNeighbours):
@@ -63,12 +61,12 @@ def repeat_the_most(listOfNeighbours):
 
 
 def group_accuracy(groupSize, correct):
-    print(correct / groupSize * 100)
+    return correct / groupSize * 100
 
 
 def is_accurate(testSubject: Vector, listOfNeighbours):
     predicted_kind = repeat_the_most(listOfNeighbours)
-
+    print(f"Test subject class: {testSubject.className}   |   Predicted: {predicted_kind}  ")
     if testSubject.className == predicted_kind:
         return 1
     else:
