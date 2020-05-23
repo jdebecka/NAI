@@ -16,8 +16,8 @@ class Language_Model:
         normalized_array = []
         for dictionary in self.letter_count_dict:
             array_vec = []
-            vac_length = math.sqrt(sum(pow(value, 2) for value in dictionary.values()))
+            vec_length = math.sqrt(sum(pow(value, 2) for value in dictionary.values()))
             for value in dictionary.values():
-                array_vec.append(value / vac_length)
+                array_vec.append(value / vec_length)
             normalized_array.append(array_vec)
         return normalized_array

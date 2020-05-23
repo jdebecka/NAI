@@ -81,6 +81,7 @@ class Data_School:
         normalized_array_for_language = single_model.normalize_and_return()
 
         output = Calculations.output_formula(normalized_array_for_language[0], self.weight_matrix, self.bias_matrix)
+        print(output)
         index_max = np.argmax(output)
 
         prediction = np.zeros(len(output))

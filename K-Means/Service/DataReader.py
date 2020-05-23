@@ -1,11 +1,11 @@
 import csv
-from Model.Vector import Vector
+from Model.Vector_K_means import Vector_K_means
 
 
 def read_and_save(file_path):
+    vector_obj = Vector_K_means()
     features: [float]
     class_name = ""
-    data: [Vector] = []
     with open(file_path, newline='') as csvfile:
         dialect = csv.Sniffer().sniff(csvfile.read(1024))
         csvfile.seek(0)
@@ -18,5 +18,5 @@ def read_and_save(file_path):
                     features.append(float_number)
                 except:
                     class_name = value
-            data.append(Vector(class_name, features))
-    return data
+            vector_obj.add_vec(class_name, features)
+    return vector_obj
